@@ -18,7 +18,6 @@ public class LoginController {
     @CrossOrigin
     @ResponseBody
     Response getUsers(@RequestBody com.sadp.equity.trading.application.controlller.User user) {
-        System.out.println("Hello");
         User dbUser = userService.getUser(user.getUserId());
         if (dbUser == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Invalid userId/password").build();
