@@ -1,15 +1,15 @@
 package com.sadp.equity.trading.application.controlller;
 
-public class User {
+public class UserBean {
 
     private String userId;
-    private String password;
+    private char[] password;
 
-    public User() {
+    public UserBean() {
 
     }
 
-    public User(String userId, String password) {
+    public UserBean(String userId, char[] password) {
         this.userId = userId;
         this.password = password;
     }
@@ -18,7 +18,7 @@ public class User {
         return userId;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 

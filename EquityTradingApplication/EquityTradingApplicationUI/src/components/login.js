@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
+import Home from './home';
 import '../styles/login.css'
+import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import browserHistory from "react-router";;
 
 class Login extends Component {
   constructor (props) {
@@ -10,35 +13,9 @@ class Login extends Component {
 }
 
 validateCredentials(event){
-    event.preventDefault();
-var xhr = new XMLHttpRequest();
-xhr.open("POST", 'http://localhost:8080/login', true);
+  event.preventDefault();
 
-//Send the proper header information along with the request
-xhr.setRequestHeader("Content-type", "application/json");
-
-xhr.onreadystatechange = function() {//Call a function when the state changes.
-    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-        var response =xhr.responseText;
-        console.log(xhr.response.status);
-        if(xhr.responseText.status!==200){
-            console.log("not 200")
-      this.setState({
-          errorMessage : "Invalid userId/Password"
-  });
-        }else{
-            this.setState({
-    errorMessage : ""
-  });
-        }
-    }
-}.bind(this);
-xhr.send(JSON.stringify({
-    userId: this.refs.userNameText.value,
-    password: this.refs.passwordText.value,
-  })); 
-
- /*fetch('http://localhost:8080/login', {
+ fetch('http://localhost:8080/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -48,18 +25,25 @@ xhr.send(JSON.stringify({
     password: this.refs.passwordText.value,
   })
 
-}).then(response => response).then(data=>console.log(data.status));*/
- 
-  //console.log(this.POST('http://localhost:8080/login', { this.refs.userNameText, this.refs.passwordText });
+}).then(response=>response.json()).then(responseJson=>{  
+  if(responseJson.status!=200){
+      this.setState({
+          errorMessage : "Invalid userId/Password"
+  });
+    }else{
+    this.props.history.replace("/home");
+
+    }})
 
 }
+
   render () {
     return (
-    <div className="wrapper">
+<div className="wrapper">
     <form className="form-signin" onSubmit ={this.validateCredentials.bind(this)}>     
-    <div >{this.state.errorMessage}</div>
+    <strong className="text-danger">{this.state.errorMessage}</strong>
       <h2 className="form-signin-heading">Please login</h2>
-      <input type="text" className="form-control" name="username" placeholder="Email Address" required="true" autofocus="" ref="userNameText"/>
+      <input type="email" className="form-control" name="username" placeholder="Email Address" required="true" autofocus="" ref="userNameText"/>
       <input type="password" className="form-control" name="password" placeholder="Password" required="true" ref="passwordText"/>      
       <label className="checkbox">
         <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"/> Remember me
