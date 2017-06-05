@@ -15,6 +15,8 @@ public class User {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
     public User() {
 
@@ -36,5 +38,7 @@ public class User {
         return userId;
     }
 
-
+    public String getName() {
+        return name;
+    }
 }

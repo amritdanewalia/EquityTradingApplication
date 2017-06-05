@@ -31,15 +31,24 @@ validateCredentials(event){
           errorMessage : "Invalid userId/Password"
   });
     }else{
-    this.props.history.replace("/home");
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("userId");
+      localStorage.setItem('jwt', responseJson.entity); 
+      localStorage.setItem('userId', this.refs.userNameText.value); 
+    this.props.history.replace(`/home/${this.refs.userNameText.value}`);
 
     }})
 
 }
 
+ componentWillMount(){
+  if(localStorage.userId!=undefined){
+     this.props.history.replace(`/home/${localStorage.userId}`);
+ }
+}
   render () {
     return (
-<div className="wrapper">
+  <div className="wrapper">
     <form className="form-signin" onSubmit ={this.validateCredentials.bind(this)}>     
     <strong className="text-danger">{this.state.errorMessage}</strong>
       <h2 className="form-signin-heading">Please login</h2>

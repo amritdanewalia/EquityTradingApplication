@@ -1,6 +1,7 @@
 package com.sadp.equity.trading.application.controlller;
 
 import com.sadp.equity.trading.application.data.User;
+import com.sadp.equity.trading.application.security.JWTValidator;
 import com.sadp.equity.trading.application.security.PasswordValidator;
 import com.sadp.equity.trading.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private PasswordValidator passwordValidator;
+    @Autowired
+    private JWTValidator jwtValidator;
 
     @RequestMapping(name = "/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
@@ -33,6 +36,7 @@ public class LoginController {
         } else if (!passwordValidator.validatePassword(userBean.getPassword(), dbUser.getPassword())) {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid userId/password").build();
         }
-        return Response.ok().build();
+        String token = jwtValidator.createJWT();
+        return Response.ok(token).build();
     }
 }
