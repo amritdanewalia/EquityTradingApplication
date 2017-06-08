@@ -36,8 +36,30 @@ logout(event){
    localStorage.removeItem("userId");
   this.props.history.replace('/');
 }
+
+renderEquities()
+{
+  var connection = new WebSocket('ws://localhost:8090/equity');
+   connection.onopen = function () {
+   connection.send('Ping');
+};
+
+// Log errors
+connection.onerror = function (error) {
+  console.log('WebSocket Error ' + error.data);
+};
+
+// Log messages from the server
+connection.onmessage = function (e) {
+  console.log('Server: ' + e.data);
+};
+}
+
+
+
   render () {
     return (
+      <div>
 <nav className="navbar navbar-inverse bg-primary">
   <div className="container-fluid">
     <div className="navbar-header">
@@ -66,6 +88,10 @@ logout(event){
 <div>    </div>
   </div>
 </nav>
+
+{this.renderEquities()}
+
+</div>
     )
   }
 }
