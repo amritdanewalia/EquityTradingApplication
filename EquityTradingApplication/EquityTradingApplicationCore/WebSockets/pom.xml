@@ -17,6 +17,11 @@
             <artifactId>EquityTradingApplicationCore</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.sadp.equity.trading.application</groupId>
+            <artifactId>web.services</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

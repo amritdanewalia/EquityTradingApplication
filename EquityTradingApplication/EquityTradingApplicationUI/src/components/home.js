@@ -46,7 +46,7 @@ renderEquities()
 
 // Log errors
 connection.onerror = function (error) {
-  console.log('WebSocket Error ' + error.data);
+  console.log('WebSocket Error ' + error);
 };
 
 // Log messages from the server

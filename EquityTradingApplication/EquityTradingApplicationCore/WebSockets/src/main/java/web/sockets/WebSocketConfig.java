@@ -1,4 +1,4 @@
-package com.sadp.equity.trading.apllication.web.sockets;/*
+package web.sockets;/*
 
 */
 /**

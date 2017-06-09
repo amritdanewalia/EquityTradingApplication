@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>./WebSockets</module>
+        <module>WebServices</module>
     </modules>
 
 
@@ -114,6 +115,13 @@
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-websocket</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
