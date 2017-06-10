@@ -23,8 +23,12 @@ public class EquityHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session)
-            throws IOException {
-        session.sendMessage(new TextMessage(googleFinanceApi.getEquities(Arrays.asList(EquityType.values()))));
+            throws IOException, InterruptedException {
+        while (true) {
+            String equities = googleFinanceApi.getEquities(Arrays.asList(EquityType.values()));
+            session.sendMessage(new TextMessage(equities));
+            Thread.sleep(500000);
+        }
     }
 
     @Override

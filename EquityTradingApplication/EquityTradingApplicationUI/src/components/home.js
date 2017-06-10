@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import '../styles/navBar.css'
+import EquitiesTable from './equitiesTable';
 
 class Home extends Component {
   constructor (props) {
     super(props)
     this.state={
-      user:{}
+      user:{},
+      equities:[]
     }
 }
 
@@ -29,32 +31,28 @@ componentWillMount(){
   localStorage.removeItem("userId");
    this.props.history.replace('/');
 }
-});}
+});
+var connection = new WebSocket('ws://localhost:8090/equity');
+   connection.onopen = function () {
+   connection.send('Ping');
+};
+
+connection.onerror = function (error) {
+  console.log('WebSocket Error ' + error);
+};
+
+connection.onmessage = function (e) {
+  this.setState({
+    equities:JSON.parse(e.data.replace("//","").trim())
+  });
+}.bind(this);
+}
 
 logout(event){
   localStorage.removeItem("jwt");
    localStorage.removeItem("userId");
   this.props.history.replace('/');
 }
-
-renderEquities()
-{
-  var connection = new WebSocket('ws://localhost:8090/equity');
-   connection.onopen = function () {
-   connection.send('Ping');
-};
-
-// Log errors
-connection.onerror = function (error) {
-  console.log('WebSocket Error ' + error);
-};
-
-// Log messages from the server
-connection.onmessage = function (e) {
-  console.log('Server: ' + e.data);
-};
-}
-
 
 
   render () {
@@ -88,8 +86,7 @@ connection.onmessage = function (e) {
 <div>    </div>
   </div>
 </nav>
-
-{this.renderEquities()}
+<EquitiesTable equities={this.state.equities}/>
 
 </div>
     )
