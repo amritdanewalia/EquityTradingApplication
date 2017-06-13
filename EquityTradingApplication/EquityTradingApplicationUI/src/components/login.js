@@ -14,7 +14,6 @@ class Login extends Component {
 
 validateCredentials(event){
   event.preventDefault();
-
  fetch('http://localhost:8080/login', {
   method: 'POST',
   headers: {

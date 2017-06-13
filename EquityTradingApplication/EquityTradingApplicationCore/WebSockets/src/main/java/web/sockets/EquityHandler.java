@@ -27,7 +27,7 @@ public class EquityHandler extends TextWebSocketHandler {
         while (true) {
             String equities = googleFinanceApi.getEquities(Arrays.asList(EquityType.values()));
             session.sendMessage(new TextMessage(equities));
-            Thread.sleep(500000);
+            Thread.sleep(10000);
         }
     }
 

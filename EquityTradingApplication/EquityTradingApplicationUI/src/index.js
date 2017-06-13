@@ -7,7 +7,7 @@ import Home from './components/home';
 
 render(<Router history={browserHistory}>
     <Route path="/" component={Login}/>
-      <Route path="home/:userName" component={Home} onEnter={requireAuth} />
+      <Route path="home/:userName" component={Home} onEnter={requireAuth} />                                                            
   </Router>, document.getElementById('app'));
 
 

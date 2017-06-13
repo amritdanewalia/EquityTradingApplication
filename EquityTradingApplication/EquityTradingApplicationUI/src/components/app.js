@@ -47,6 +47,7 @@ handleChange(event){
     render() {
         return (
             <div>
+            <Popup/>
                 <h1>React ToDo App</h1>
                 <form onSubmit ={this.push.bind(this)}>
                 <input type="text" name ="textBox" onChange={this.handleChange.bind(this)} value={this.state.value} />
