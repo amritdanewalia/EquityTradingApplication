@@ -21,10 +21,10 @@ public class LoginController {
     @Autowired
     private JWTValidator jwtValidator;
 
-    @RequestMapping(name = "/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @CrossOrigin
     @ResponseBody
-    Response getUsers(@RequestBody UserBean userBean) {
+    Response login(@RequestBody UserBean userBean) {
         if (StringUtils.isEmpty(userBean.getUserId()) || StringUtils.isEmpty(userBean.getPassword())) {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid userId/password").build();
         }

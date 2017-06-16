@@ -86,7 +86,7 @@ logout(event){
 <div>    </div>
   </div>
 </nav>
-<EquitiesTable equities={this.state.equities}/>
+<EquitiesTable equities={this.state.equities} userName={this.state.user.name}/>
 
 </div>
     )

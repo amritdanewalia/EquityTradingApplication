@@ -1,0 +1,58 @@
+.btn-info {
+    color: #fff;
+    background-color: #0275d8;
+    border-color: #0275d8
+}
+.active{
+color:#FFFFFF;
+  background-color: #fff;
+}
+
+.react-bs-table .react-bs-container-row {
+    cursor: pointer;
+}
+
+.react-bs-table table td, .react-bs-table table th {
+   cursor: pointer;}
+
+  .react-bs-table .react-bs-container-header>table>thead>tr>th {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7
+}
+
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #000000;
+}
+
+.form-group-sm .form-control {
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.modal-body {
+    padding-top: 0px;
+}
+
+.modal-dialog {
+    width:500px;
+}
+
+.modal-header {
+   color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7
+}
+
+.form-horizontal .form-group {
+       margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.custom{
+	height: 575px;
+}
+
