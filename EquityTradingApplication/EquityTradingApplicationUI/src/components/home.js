@@ -1,16 +1,21 @@
 import React, {Component} from 'react'
 import '../styles/navBar.css'
 import EquitiesTable from './equitiesTable';
+import { connect } from "react-redux";
 
+@connect((store) => {
+  return {
+    user:store.user.user,
+    equities:store.equities.equities
+  };
+})
 class Home extends Component {
   constructor (props) {
     super(props)
-    this.state={
-      user:{},
-      equities:[]
-    }
 }
-
+componentDidMount(){
+  console.log("equities "+this.props.user.name);
+}
  requestHeaders() {
      return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
   }
@@ -23,9 +28,7 @@ componentWillMount(){
      headers: headers
   }).then(response=>response.json()).then(responseJson=>{  
   if(responseJson.status==200){
-      this.setState({
-          user : responseJson.entity
-  });
+  this.props.dispatch({type:"FETCH_USER_SUCCESS",payload:responseJson.entity});
 }else if(responseJson.status==401){
  localStorage.removeItem("jwt");
   localStorage.removeItem("userId");
@@ -42,9 +45,7 @@ connection.onerror = function (error) {
 };
 
 connection.onmessage = function (e) {
-  this.setState({
-    equities:JSON.parse(e.data.replace("//","").trim())
-  });
+  this.props.dispatch({type:"FETCH_EQUITIES_SUCCESS",payload:e.data.replace("//","").trim()});
 }.bind(this);
 }
 
@@ -80,13 +81,13 @@ logout(event){
 
     <div>
       <p className = "navbar-text navbar-right">
-         Hi, {this.state.user.name}
+         Hi, {this.props.user.name}
       </p>
    </div>
 <div>    </div>
   </div>
 </nav>
-<EquitiesTable equities={this.state.equities} userName={this.state.user.name}/>
+<EquitiesTable equities={this.props.equities} userName={this.props.user.name}/>
 
 </div>
     )

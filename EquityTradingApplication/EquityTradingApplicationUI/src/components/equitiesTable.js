@@ -116,6 +116,7 @@ var options = {
         return (
      <div>
       <Dialog ref='dialog' />
+      <Dialog ref='errorDialog' />
       <BootstrapTable data={this.props.equities} striped={true} hover={true} pagination options={options} search >
        <TableHeaderColumn dataField="t" isKey={true}  dataSort={true}>Symbol</TableHeaderColumn>
         <TableHeaderColumn dataField="l" dataSort={true}>LTP</TableHeaderColumn>
@@ -123,7 +124,6 @@ var options = {
         <TableHeaderColumn dataField="pcls_fix" dataSort={true}>Prev. Close</TableHeaderColumn>
         <TableHeaderColumn dataField="e" dataSort={true} >LTP</TableHeaderColumn>
        </BootstrapTable>
-         <Dialog ref='sucessDialog' />
      </div>
        )
     }

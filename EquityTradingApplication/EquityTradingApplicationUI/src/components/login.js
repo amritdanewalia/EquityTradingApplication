@@ -2,19 +2,27 @@ import React, {Component} from 'react'
 import Home from './home';
 import '../styles/login.css'
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
-import browserHistory from "react-router";;
+import browserHistory from "react-router";
+import { connect } from "react-redux";
 
+
+   
+
+@connect((store) => {
+  return {
+error:store.login.error
+  };
+})
 class Login extends Component {
   constructor (props) {
     super(props)
-  this.state={
-    errorMessage : ""
-  }
 }
-
+componentDidMount(){
+  console.log("equities "+this.props.equities);
+}
 validateCredentials(event){
   event.preventDefault();
- fetch('http://localhost:8080/login', {
+fetch('http://localhost:8080/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -26,9 +34,7 @@ validateCredentials(event){
 
 }).then(response=>response.json()).then(responseJson=>{  
   if(responseJson.status!=200){
-      this.setState({
-          errorMessage : "Invalid userId/Password"
-  });
+    this.props.dispatch({type: "LOGIN_FAILED", payload: "Invalid userId/Password"})
     }else{
       localStorage.removeItem("jwt");
       localStorage.removeItem("userId");
@@ -37,9 +43,8 @@ validateCredentials(event){
     this.props.history.replace(`/home/${this.refs.userNameText.value}`);
 
     }})
-
 }
-
+  
  componentWillMount(){
   if(localStorage.userId!=undefined){
      this.props.history.replace(`/home/${localStorage.userId}`);
@@ -49,7 +54,7 @@ validateCredentials(event){
     return (
   <div className="wrapper">
     <form className="form-signin" onSubmit ={this.validateCredentials.bind(this)}>     
-    <strong className="text-danger">{this.state.errorMessage}</strong>
+    <strong className="text-danger">{this.props.error}</strong>
       <h2 className="form-signin-heading">Please login</h2>
       <input type="email" className="form-control" name="username" placeholder="Email Address" required="true" autofocus="" ref="userNameText"/>
       <input type="password" className="form-control" name="password" placeholder="Password" required="true" ref="passwordText"/>      
