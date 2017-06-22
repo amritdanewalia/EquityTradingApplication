@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import '../styles/navBar.css'
 import EquitiesTable from './equitiesTable';
 import { connect } from "react-redux";
+import {Link} from "react-router";
+
 
 @connect((store) => {
   return {
@@ -22,7 +24,7 @@ componentDidMount(){
 
 componentWillMount(){
   const headers = this.requestHeaders();
-  let userId =this.props.params.userName;
+  let userId =localStorage.userId;
  fetch('http://localhost:8080/user?userId='+userId,{
      method: 'GET',
      headers: headers
@@ -73,7 +75,7 @@ logout(event){
           <li><a href="#">Page 1-3</a></li>
         </ul>
       </li>
-      <li><a href="#">Page 2</a></li>
+      <li><Link to ="main/orders">View Orders</Link></li>
     </ul>
     <ul className="nav navbar-nav navbar-right">
       <li><a href="#" onClick= {this.logout.bind(this)}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -87,7 +89,8 @@ logout(event){
 <div>    </div>
   </div>
 </nav>
-<EquitiesTable equities={this.props.equities} userName={this.props.user.name}/>
+{this.props.children}
+{<EquitiesTable equities={this.props.equities} userName={this.props.user.name}/>}
 
 </div>
     )

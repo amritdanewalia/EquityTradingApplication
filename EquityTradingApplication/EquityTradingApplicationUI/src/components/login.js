@@ -17,9 +17,7 @@ class Login extends Component {
   constructor (props) {
     super(props)
 }
-componentDidMount(){
-  console.log("equities "+this.props.equities);
-}
+
 validateCredentials(event){
   event.preventDefault();
 fetch('http://localhost:8080/login', {
@@ -40,14 +38,14 @@ fetch('http://localhost:8080/login', {
       localStorage.removeItem("userId");
       localStorage.setItem('jwt', responseJson.entity); 
       localStorage.setItem('userId', this.refs.userNameText.value); 
-    this.props.history.replace(`/home/${this.refs.userNameText.value}`);
+    this.props.history.replace(`/main`);
 
     }})
 }
   
  componentWillMount(){
   if(localStorage.userId!=undefined){
-     this.props.history.replace(`/home/${localStorage.userId}`);
+     this.props.history.replace(`/main`);
  }
 }
   render () {
