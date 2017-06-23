@@ -1,18 +1,12 @@
 import React from 'react';
 import  'react-bootstrap-table'
-import '../styles/button.css'
+
 import Dialog from 'react-bootstrap-dialog'
-import EquitiesTablePopup from './equitiesTablePopup';
 import Popup from 'react-popup';
 import { connect } from "react-redux";
 
-@connect((store) => {
-  return {
-    user:store.user.user,
-    equities:store.equities.equities
-  };
-})
-class EquitiesTable extends React.Component {
+
+class OrdersTable extends React.Component {
     constructor(props) {
         super(props);
         this.state={
@@ -25,34 +19,6 @@ class EquitiesTable extends React.Component {
         }
 
     }
-componentWillMount(){
-  const headers = this.requestHeaders();
-  let userId =localStorage.userId;
- fetch('http://localhost:8080/user?userId='+userId,{
-     method: 'GET',
-     headers: headers
-  }).then(response=>response.json()).then(responseJson=>{  
-  if(responseJson.status==200){
-  this.props.dispatch({type:"FETCH_USER_SUCCESS",payload:responseJson.entity});
-}else if(responseJson.status==401){
- localStorage.removeItem("jwt");
-  localStorage.removeItem("userId");
-   this.props.history.replace('/');
-}
-});
-var connection = new WebSocket('ws://localhost:8090/equity');
-   connection.onopen = function () {
-   connection.send('Ping');
-};
-
-connection.onerror = function (error) {
-  console.log('WebSocket Error ' + error);
-};
-
-connection.onmessage = function (e) {
-  this.props.dispatch({type:"FETCH_EQUITIES_SUCCESS",payload:e.data.replace("//","").trim()});
-}.bind(this);
-}
 
   requestHeaders() {
      return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
@@ -90,6 +56,12 @@ this.setState({
 	comments:value
 });
 }
+ sendButtonFormatter(cell, row){
+  return '<button class="btn btn-sm btn-primary btn-block" type="submit">Send</button> ';
+}
+deleteButtonFormatter(cell, row){
+  return '<button class="btn btn-sm btn-primary btn-block" type="submit">Delete</button> ';
+}
     render() {
 
 var options = {
@@ -112,7 +84,7 @@ var options = {
   },
    body: JSON.stringify({
     equityId: row.id,
-    symbol:row.t,
+    symbol: row.t,
     price: row.l.replace(",",""),
     side:this.state.side,
     orderType:this.state.orderType,
@@ -154,12 +126,16 @@ var options = {
      <div>
       <Dialog ref='dialog' />
       <Dialog ref='sucessDialog' />
-      <BootstrapTable data={this.props.equities} striped={true} hover={true} pagination options={options} search >
-       <TableHeaderColumn dataField="t" isKey={true}  dataSort={true}>Symbol</TableHeaderColumn>
-        <TableHeaderColumn dataField="l" dataSort={true}>LTP</TableHeaderColumn>
-        <TableHeaderColumn dataField="cp" dataSort={true}>% Change</TableHeaderColumn>
-        <TableHeaderColumn dataField="pcls_fix" dataSort={true}>Prev. Close</TableHeaderColumn>
-        <TableHeaderColumn dataField="e" dataSort={true} >LTP</TableHeaderColumn>
+      <BootstrapTable data={this.props.orders} striped={true} hover={true} pagination options={options} search >
+       <TableHeaderColumn dataField="symbol" isKey={true}  dataSort={true}>Symbol</TableHeaderColumn>
+        <TableHeaderColumn dataField="price" dataSort={true}>Price</TableHeaderColumn>
+        <TableHeaderColumn dataField="side" dataSort={true}>Side</TableHeaderColumn>
+        <TableHeaderColumn dataField="orderType" dataSort={true}>Order Type</TableHeaderColumn>
+        <TableHeaderColumn dataField="accountType" dataSort={true} >Account Type</TableHeaderColumn>
+        <TableHeaderColumn dataField="portfolio" dataSort={true} >Portfolio</TableHeaderColumn>
+       <TableHeaderColumn dataField="quantity" dataSort={true} >Quantity</TableHeaderColumn>
+       <TableHeaderColumn dataField="button" dataFormat={this.sendButtonFormatter}>Send</TableHeaderColumn>
+       <TableHeaderColumn dataField="button" dataFormat={this.deleteButtonFormatter}>Delete</TableHeaderColumn>
        </BootstrapTable>
      </div>
        )
@@ -168,4 +144,4 @@ var options = {
   
 }
 
-export default EquitiesTable;
+export default OrdersTable;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import '../styles/navBar.css'
-import EquitiesTable from './equitiesTable';
+import OrdersTable from './ordersTable';
 import { connect } from "react-redux";
 import Link from "react-router";
 
@@ -19,7 +19,6 @@ class Orders extends Component {
   }
 
 componentWillMount(){
-  console.log("nai ho");
   const headers = this.requestHeaders();
  fetch('http://localhost:8080/orders',{
      method: 'GET',
@@ -28,7 +27,9 @@ componentWillMount(){
   if(responseJson.status==200){
   this.props.dispatch({type:"FETCH_ORDERS_SUCCESS",payload:responseJson.entity});
 }else if(responseJson.status==401){
- 
+ localStorage.removeItem("jwt");
+  localStorage.removeItem("userId");
+   this.props.history.replace('/');
 }
 });
 }
@@ -38,7 +39,7 @@ componentWillMount(){
   render () {
     return (
       <div>
-      Hello
+      <OrdersTable orders={this.props.orders}/>
 </div>
     )
   }

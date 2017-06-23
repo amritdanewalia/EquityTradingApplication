@@ -1,5 +1,7 @@
 package com.sadp.equity.trading.application.data;
 
+import web.services.data.EquityType;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -14,6 +16,10 @@ public class Orders {
 
     @Column(name = "EQUITY_ID", nullable = false, unique = false)
     private long equityId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "EQUITY_TYPE", nullable = false, unique = false)
+    private EquityType equityType;
 
     @Column(name = "PRICE", nullable = false, unique = false)
     private BigDecimal price;
@@ -46,8 +52,9 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(long equityId, BigDecimal price, Side side, OrderType orderType, String traderUserName, AccountType accountType, Portfolio portfolio, long quantity, String comments) {
+    public Orders(long equityId, EquityType equityType, BigDecimal price, Side side, OrderType orderType, String traderUserName, AccountType accountType, Portfolio portfolio, long quantity, String comments) {
         this.equityId = equityId;
+        this.equityType = equityType;
         this.price = price;
         this.side = side;
         this.orderType = orderType;
@@ -96,5 +103,9 @@ public class Orders {
 
     public String getComments() {
         return comments;
+    }
+
+    public EquityType getEquityType() {
+        return equityType;
     }
 }

@@ -22,6 +22,15 @@ public enum EquityType {
         this.description = description;
     }
 
+    public static EquityType typeOf(String description) {
+        for (EquityType equityType : values()) {
+            if (equityType.getDescription().equals(description)) {
+                return equityType;
+            }
+        }
+        throw new IllegalArgumentException("Invalid description");
+    }
+
     public String getDescription() {
         return description;
     }

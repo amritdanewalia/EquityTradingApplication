@@ -1,14 +1,11 @@
 import React, {Component} from 'react'
 import '../styles/navBar.css'
-import EquitiesTable from './equitiesTable';
-import { connect } from "react-redux";
 import {Link} from "react-router";
-
+import { connect } from "react-redux";
 
 @connect((store) => {
   return {
     user:store.user.user,
-    equities:store.equities.equities
   };
 })
 class Home extends Component {
@@ -37,18 +34,6 @@ componentWillMount(){
    this.props.history.replace('/');
 }
 });
-var connection = new WebSocket('ws://localhost:8090/equity');
-   connection.onopen = function () {
-   connection.send('Ping');
-};
-
-connection.onerror = function (error) {
-  console.log('WebSocket Error ' + error);
-};
-
-connection.onmessage = function (e) {
-  this.props.dispatch({type:"FETCH_EQUITIES_SUCCESS",payload:e.data.replace("//","").trim()});
-}.bind(this);
 }
 
 logout(event){
@@ -67,7 +52,7 @@ logout(event){
       <a className="navbar-brand" href="#">Equity Trading Application</a>
     </div>
     <ul className="nav navbar-nav">
-      <li className="nav-item active"><a href="#">Home</a></li>
+      <li className="nav-item active"><Link to ="main/home">Home</Link></li>
       <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span className="caret"></span></a>
         <ul className="dropdown-menu">
           <li><a href="#">Page 1-1</a></li>
@@ -90,8 +75,6 @@ logout(event){
   </div>
 </nav>
 {this.props.children}
-{<EquitiesTable equities={this.props.equities} userName={this.props.user.name}/>}
-
 </div>
     )
   }

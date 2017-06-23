@@ -4,10 +4,7 @@ import '../styles/login.css'
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import browserHistory from "react-router";
 import { connect } from "react-redux";
-
-
-   
-
+ 
 @connect((store) => {
   return {
 error:store.login.error
@@ -38,14 +35,14 @@ fetch('http://localhost:8080/login', {
       localStorage.removeItem("userId");
       localStorage.setItem('jwt', responseJson.entity); 
       localStorage.setItem('userId', this.refs.userNameText.value); 
-    this.props.history.replace(`/main`);
+    this.props.history.replace(`/main/home`);
 
     }})
 }
   
  componentWillMount(){
   if(localStorage.userId!=undefined){
-     this.props.history.replace(`/main`);
+     this.props.history.replace(`/main/home`);
  }
 }
   render () {
