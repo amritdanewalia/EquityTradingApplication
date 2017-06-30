@@ -8,6 +8,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>EquityTradingApplicationCore</module>
+		<module>WebSockets</module>
+		<module>WebServices</module>
 		<module>EquityTradingApplicationUI</module>
 	</modules>
 	<packaging>pom</packaging>
@@ -27,5 +29,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
+
 
 </project>
