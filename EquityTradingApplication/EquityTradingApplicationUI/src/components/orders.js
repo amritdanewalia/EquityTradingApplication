@@ -3,6 +3,7 @@ import '../styles/navBar.css'
 import OrdersTable from './ordersTable';
 import { connect } from "react-redux";
 import Link from "react-router";
+import {ORDERS_URL} from './serviceUrlConstants';
 
 @connect((store) => {
   return {
@@ -20,7 +21,7 @@ class Orders extends Component {
 
 componentWillMount(){
   const headers = this.requestHeaders();
- fetch('http://localhost:8080/orders',{
+ fetch(ORDERS_URL,{
      method: 'GET',
      headers: headers
   }).then(response=>response.json()).then(responseJson=>{  

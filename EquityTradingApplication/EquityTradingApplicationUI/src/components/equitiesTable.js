@@ -5,6 +5,7 @@ import Dialog from 'react-bootstrap-dialog'
 import EquitiesTablePopup from './equitiesTablePopup';
 import Popup from 'react-popup';
 import { connect } from "react-redux";
+import {GET_USER_URL,EQUITY_URL,ORDERS_URL} from './serviceUrlConstants';
 
 @connect((store) => {
   return {
@@ -28,7 +29,7 @@ class EquitiesTable extends React.Component {
 componentWillMount(){
   const headers = this.requestHeaders();
   let userId =localStorage.userId;
- fetch('http://localhost:8080/user?userId='+userId,{
+ fetch(GET_USER_URL+userId,{
      method: 'GET',
      headers: headers
   }).then(response=>response.json()).then(responseJson=>{  
@@ -40,7 +41,7 @@ componentWillMount(){
    this.props.history.replace('/');
 }
 });
-var connection = new WebSocket('ws://localhost:8090/equity');
+var connection = new WebSocket(EQUITY_URL);
    connection.onopen = function () {
    connection.send('Ping');
 };
@@ -104,7 +105,7 @@ var options = {
                      actions: [
                              Dialog.CancelAction(),
                              Dialog.Action('Save',() => {
-                     fetch('http://localhost:8080/orders', {
+                     fetch(ORDERS_URL, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

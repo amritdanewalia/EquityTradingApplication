@@ -4,7 +4,7 @@ import  'react-bootstrap-table'
 import Dialog from 'react-bootstrap-dialog'
 import Popup from 'react-popup';
 import { connect } from "react-redux";
-
+import {ORDERS_URL} from './serviceUrlConstants';
 
 class OrdersTable extends React.Component {
     constructor(props) {
@@ -76,7 +76,7 @@ var options = {
                      actions: [
                              Dialog.CancelAction(),
                              Dialog.Action('Save',() => {
-                     fetch('http://localhost:8080/orders', {
+                     fetch(ORDERS_URL, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

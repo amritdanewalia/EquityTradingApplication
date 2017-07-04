@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import '../styles/navBar.css'
 import {Link} from "react-router";
 import { connect } from "react-redux";
+import {GET_USER_URL} from './serviceUrlConstants';
 
 @connect((store) => {
   return {
@@ -12,9 +13,7 @@ class Home extends Component {
   constructor (props) {
     super(props)
 }
-componentDidMount(){
-  console.log("equities "+this.props.user.name);
-}
+
  requestHeaders() {
      return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
   }
@@ -22,7 +21,7 @@ componentDidMount(){
 componentWillMount(){
   const headers = this.requestHeaders();
   let userId =localStorage.userId;
- fetch('http://localhost:8080/user?userId='+userId,{
+ fetch(GET_USER_URL+userId,{
      method: 'GET',
      headers: headers
   }).then(response=>response.json()).then(responseJson=>{  

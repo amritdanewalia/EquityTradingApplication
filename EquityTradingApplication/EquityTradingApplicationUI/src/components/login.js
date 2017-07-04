@@ -4,6 +4,7 @@ import '../styles/login.css'
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import browserHistory from "react-router";
 import { connect } from "react-redux";
+import {LOGIN_URL} from './serviceUrlConstants';
  
 @connect((store) => {
   return {
@@ -17,7 +18,7 @@ class Login extends Component {
 
 validateCredentials(event){
   event.preventDefault();
-fetch('http://localhost:8080/login', {
+fetch(LOGIN_URL, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
