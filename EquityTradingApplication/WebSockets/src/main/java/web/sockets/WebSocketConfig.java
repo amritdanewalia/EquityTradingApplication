@@ -33,8 +33,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry
-                .addHandler(equityHandler, "/equity")
-                .setAllowedOrigins("http://localhost:3000").addInterceptors(new UriTemplateHandshakeInterceptor());
+                .addHandler(equityHandler, "/equity").
+                addInterceptors(new UriTemplateHandshakeInterceptor());
     }
 
 
