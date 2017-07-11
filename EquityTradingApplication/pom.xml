@@ -11,6 +11,7 @@
 		<module>WebSockets</module>
 		<module>WebServices</module>
 		<module>EquityTradingApplicationUI</module>
+		<module>PortFolioManagerCore</module>
 	</modules>
 	<packaging>pom</packaging>
 
