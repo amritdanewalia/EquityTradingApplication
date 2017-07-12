@@ -51,7 +51,7 @@ logout(event){
       <a className="navbar-brand" href="#">Equity Trading Application</a>
     </div>
     <ul className="nav navbar-nav">
-      <li className="nav-item active"><Link to ="main/home">Home</Link></li>
+      <li className="nav-item active"><Link to ="/main/home">Home</Link></li>
       <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span className="caret"></span></a>
         <ul className="dropdown-menu">
           <li><a href="#">Page 1-1</a></li>
@@ -59,7 +59,7 @@ logout(event){
           <li><a href="#">Page 1-3</a></li>
         </ul>
       </li>
-      <li><Link to ="main/orders">View Orders</Link></li>
+      <li><Link to ="/main/orders">View Orders</Link></li>
     </ul>
     <ul className="nav navbar-nav navbar-right">
       <li><a href="#" onClick= {this.logout.bind(this)}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
