@@ -5,6 +5,7 @@ import Dialog from 'react-bootstrap-dialog'
 import Popup from 'react-popup';
 import { connect } from "react-redux";
 import {ORDERS_URL} from './serviceUrlConstants';
+import {SEND_ORDERS_URL} from './serviceUrlConstants';
 
 class OrdersTable extends React.Component {
     constructor(props) {
@@ -23,83 +24,28 @@ class OrdersTable extends React.Component {
   requestHeaders() {
      return {'AUTHORIZATION': `Bearer ${localStorage.jwt}`}
   }
-
-setSide(value){
-this.setState({
-	side:value
-});
-}
-
-setOrderType(value){
-this.setState({
-	orderType:value
-});
-}
-
-setAccountType(value){
-this.setState({
-	accountType:value
-});
-}
-setPortfolio(value){
-this.setState({
-	portfolio:value
-});
-}
-setQuantity(value){
-this.setState({
-	quantity:value
-});
-}
-setComments(value){
-this.setState({
-	comments:value
-});
-}
- sendButtonFormatter(cell, row){
-  return '<button class="btn btn-sm btn-primary btn-block" type="submit">Send</button> ';
-}
-deleteButtonFormatter(cell, row){
-  return '<button class="btn btn-sm btn-primary btn-block" type="submit">Delete</button> ';
-}
-    render() {
-
-var options = {
-     onRowClick: function(row){
- 		             this.refs.dialog.show({
-                     title: 'Create Order',
-                     body: <EquitiesTablePopup equity={row} setSide={this.setSide.bind(this)} 
-                     setOrderType={this.setOrderType.bind(this)} setAccountType={this.setAccountType.bind(this)}
-                     setQuantity={this.setQuantity.bind(this)} setComments={this.setComments.bind(this)} traderUserName={this.props.user.name}/>
-,
-
-                     actions: [
-                             Dialog.CancelAction(),
-                             Dialog.Action('Save',() => {
-                     fetch(ORDERS_URL, {
+ sendData(cell, row){
+fetch(SEND_ORDERS_URL, {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
-    'Authorization':`Bearer ${localStorage.jwt}`
+    'Content-Type': 'application/json'
   },
    body: JSON.stringify({
-    equityId: row.id,
-    symbol: row.t,
-    price: row.l.replace(",",""),
-    side:this.state.side,
-    orderType:this.state.orderType,
-    accountType:this.state.accountType,
-    portfolio:this.state.portfolio,
-    quantity:this.state.quantity,
-    comments:this.state.comments,
-    traderUserName:this.props.user.userId
+    orderId: row.orderId,
+    symbol: row.symbol,
+    price: row.price,
+    side: row.side,
+    orderType: row.orderType,
+    accountType: row.accountType,
+    portfolio: row.portfolio,
+    quantity: row.quantity
   })
 
-}).then(response=>response.json()).then(responseJson=>{  
-  if(responseJson.status==200){
-  	this.refs.sucessDialog.show({
+}).then(response=>{
+if(response.status==200){
+  this.refs.sucessDialog.show({
   title: 'Success',
-  body: <h4>Order Sucessfully Created</h4>,
+  body: <h4>Order Sucessfully Sent</h4>,
   actions: [
     Dialog.OKAction()
   ],
@@ -109,24 +55,36 @@ var options = {
     console.log('closed by clicking background.')
   }
 })
-    }})
-                              },'btn-info')
-                              ],
-                     bsSize: 'small',
-                     onHide: (dialog) => {
-                            
-                             console.log('closed by clicking background.')
-                                }
-                               } )
- 
-                                }.bind(this)
+}else{
+  this.refs.failureDialog.show({
+  title: 'Failure',
+  body: <h4>Order Delivery Failed</h4>,
+  actions: [
+    Dialog.OKAction()
+  ],
+  bsSize: 'small',
+  onHide: (dialog) => {
+    dialog.hide()
+    console.log('closed by clicking background.')
+  }
+})
+}
+})
+}
 
-                                 }
+ sendButtonFormatter(cell, row){
+  return <button className="btn btn-sm btn-primary btn-block" type="submit" onClick={() => this.sendData(cell, row)}>Send</button>;
+}
+deleteButtonFormatter(cell, row){
+  return '<button class="btn btn-sm btn-primary btn-block" type="submit">Delete</button> ';
+}
+    render() {
         return (
      <div>
       <Dialog ref='dialog' />
       <Dialog ref='sucessDialog' />
-      <BootstrapTable data={this.props.orders} striped={true} hover={true} pagination options={options} search >
+      <Dialog ref='failureDialog' />
+      <BootstrapTable data={this.props.orders} striped={true} hover={true} pagination search >
        <TableHeaderColumn dataField="symbol" isKey={true}  dataSort={true}>Symbol</TableHeaderColumn>
         <TableHeaderColumn dataField="price" dataSort={true}>Price</TableHeaderColumn>
         <TableHeaderColumn dataField="side" dataSort={true}>Side</TableHeaderColumn>
@@ -134,7 +92,7 @@ var options = {
         <TableHeaderColumn dataField="accountType" dataSort={true} >Account Type</TableHeaderColumn>
         <TableHeaderColumn dataField="portfolio" dataSort={true} >Portfolio</TableHeaderColumn>
        <TableHeaderColumn dataField="quantity" dataSort={true} >Quantity</TableHeaderColumn>
-       <TableHeaderColumn dataField="button" dataFormat={this.sendButtonFormatter}>Send</TableHeaderColumn>
+       <TableHeaderColumn dataField="button" dataFormat={this.sendButtonFormatter.bind(this)}>Send</TableHeaderColumn>
        <TableHeaderColumn dataField="button" dataFormat={this.deleteButtonFormatter}>Delete</TableHeaderColumn>
        </BootstrapTable>
      </div>
