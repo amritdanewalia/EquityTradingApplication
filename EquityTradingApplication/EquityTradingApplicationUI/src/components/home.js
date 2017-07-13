@@ -48,13 +48,13 @@ logout(event){
 <nav className="navbar navbar-inverse bg-primary">
   <div className="container-fluid">
     <div className="navbar-header">
-      <a className="navbar-brand" href="#">Equity Trading Application</a>
+      <a className="navbar-brand" href="/main/home">Equity Trading Application</a>
     </div>
     <ul className="nav navbar-nav">
       <li className="nav-item active"><Link to ="/main/home">Home</Link></li>
-      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span className="caret"></span></a>
+      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#">Execution Blocks <span className="caret"></span></a>
         <ul className="dropdown-menu">
-          <li><a href="#">Page 1-1</a></li>
+          <li><Link to ="/main/blocks">Create Block</Link></li>
           <li><a href="#">Page 1-2</a></li>
           <li><a href="#">Page 1-3</a></li>
         </ul>

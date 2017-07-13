@@ -8,7 +8,6 @@ class EquitiesTablePopup extends Component {
 
 setSide(event){
 this.props.setSide(event.target.value);
-console.log(this.props);
 }
 
 setOrderType(event){

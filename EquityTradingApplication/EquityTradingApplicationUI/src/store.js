@@ -7,7 +7,8 @@ import reducer from "./reducers/loginReducer"
 import userReducer from "./reducers/userReducer"
 import equitiesReducer from "./reducers/equitiesReducer"
 import ordersReducer from "./reducers/ordersReducer"
+import blockOrdersReducer from "./reducers/blockOrdersReducer"
 
 const middleware = applyMiddleware(thunk)
-const reducers =combineReducers({login:reducer,user:userReducer,equities:equitiesReducer, orders:ordersReducer})
+const reducers =combineReducers({login:reducer,user:userReducer,equities:equitiesReducer, orders:ordersReducer, blockOrders:blockOrdersReducer})
 export default createStore(reducers, middleware)

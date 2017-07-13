@@ -56,3 +56,7 @@ color:#FFFFFF;
 	height: 575px;
 }
 
+.bottom-right{
+  position: absolute;
+  right:10px;
+}
