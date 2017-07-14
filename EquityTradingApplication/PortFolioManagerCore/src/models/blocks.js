@@ -32,3 +32,6 @@ module.exports.addBlocks=function(block,callback){
 	Blocks.create(block,callback);
 }
 
+module.exports.getBlocks=function(callback){
+	Blocks.find(callback);
+}

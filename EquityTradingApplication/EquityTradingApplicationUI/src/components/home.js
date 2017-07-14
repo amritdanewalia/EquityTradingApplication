@@ -55,7 +55,7 @@ logout(event){
       <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#">Execution Blocks <span className="caret"></span></a>
         <ul className="dropdown-menu">
           <li><Link to ="/main/blocks">Create Block</Link></li>
-          <li><a href="#">Page 1-2</a></li>
+          <li><Link to ="/main/view-blocks">View Blocks</Link></li>
           <li><a href="#">Page 1-3</a></li>
         </ul>
       </li>

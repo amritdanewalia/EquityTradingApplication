@@ -5,6 +5,7 @@ app.use(cors());
 var bodyParser=require('body-parser');
 var mongoose = require('mongoose');
 var orders = require('./models/orders');
+var blocks = require('./models/blocks');
 var blocksBusiness = require('./business/blocksBusiness');
 app.use(bodyParser.json());
 mongoose.connect('localhost:27017/portfoliomanagercore');
@@ -43,4 +44,15 @@ res.sendStatus(200);
 
 });
 
+
+app.get('/blocks',function(req,res){
+blocks.getBlocks(function(err,result){
+if(err){
+	throw err;
+}
+res.status(200);
+res.json(result);
+})
+
+});
 app.listen(3001);
