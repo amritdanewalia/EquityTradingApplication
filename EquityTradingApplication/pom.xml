@@ -12,6 +12,7 @@
 		<module>WebServices</module>
 		<module>EquityTradingApplicationUI</module>
 		<module>PortFolioManagerCore</module>
+		<module>BrokerCore</module>
 	</modules>
 	<packaging>pom</packaging>
 

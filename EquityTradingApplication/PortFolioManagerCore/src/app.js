@@ -55,4 +55,16 @@ res.json(result);
 })
 
 });
+
+app.post('/send-blocks',function(req,res){
+var blocks = req.body;
+blocksBusiness.sendBlocks(blocks, function(err,ok){
+if(err){
+	throw err;
+}
+res.sendStatus(200);
+})
+
+});
+
 app.listen(3001);
